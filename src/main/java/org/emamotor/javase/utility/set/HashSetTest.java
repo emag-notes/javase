@@ -1,5 +1,7 @@
 package org.emamotor.javase.utility.set;
 
+import org.emamotor.javase.utility.common.Human;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;

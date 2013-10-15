@@ -1,4 +1,4 @@
-package org.emamotor.javase.utility.set;
+package org.emamotor.javase.utility.common;
 
 /**
  * @author emag
