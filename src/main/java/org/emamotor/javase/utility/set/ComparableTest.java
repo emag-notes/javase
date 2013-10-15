@@ -1,8 +1,8 @@
 package org.emamotor.javase.utility.set;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author emag
@@ -11,7 +11,7 @@ public class ComparableTest {
 
     public static void main(String... args) {
 
-        Set<Human> set = new HashSet<>();
+        Set<Human> set = new TreeSet<>();
 
         set.add(new Human("Dave",  20));
         set.add(new Human("Alice", 16));
