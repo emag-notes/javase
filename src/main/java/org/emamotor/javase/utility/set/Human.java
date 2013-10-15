@@ -3,7 +3,7 @@ package org.emamotor.javase.utility.set;
 /**
  * @author emag
  */
-public class Human {
+public class Human implements Comparable<Human> {
 
     private String name;
     private int age;
@@ -52,9 +52,23 @@ public class Human {
     @Override
     public String toString() {
         return "Human{" +
-                "age=" + age +
                 ", name='" + name + '\'' +
+                "age=" + age +
                 '}';
     }
 
+    @Override
+    public int compareTo(Human other) {
+
+        int nameComparison = this.name.compareTo(other.getName());
+
+        if (nameComparison > 0) return  1;
+        if (nameComparison < 0) return -1;
+
+        if (this.age > other.getAge()) return  1;
+        if (this.age < other.getAge()) return -1;
+
+        return 0;
+
+    }
 }
