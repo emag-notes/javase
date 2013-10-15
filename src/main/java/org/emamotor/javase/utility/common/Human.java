@@ -13,19 +13,19 @@ public class Human implements Comparable<Human> {
         this.age = age;
     }
 
-    String getName() {
+    public String getName() {
         return this.name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    int getAge() {
+    public int getAge() {
         return this.age;
     }
 
-    void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
