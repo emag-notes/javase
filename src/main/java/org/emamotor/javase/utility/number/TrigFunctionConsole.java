@@ -21,7 +21,7 @@ public class TrigFunctionConsole extends JFrame {
         TrigFunctionConsole frame = new TrigFunctionConsole("Trig Function Console");
         frame.setSize(500, 300);
         frame.setVisible(true);
-        
+
     }
 
     class DrawGraph extends JComponent {
