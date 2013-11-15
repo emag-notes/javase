@@ -20,13 +20,14 @@ public class CountDownLatchTest {
                     .start();
         }
 
-        System.out.println("sleep 5 sec.");
         TimeUnit.SECONDS.sleep(5);
 
         System.out.println("Open startGate 1/2");
         startGate.countDown();
+        
         System.out.println("sleep 5 sec.");
         TimeUnit.SECONDS.sleep(5);
+
         System.out.println("Open startGate 2/2");
         startGate.countDown();
 
@@ -64,8 +65,8 @@ public class CountDownLatchTest {
 
                 System.out.println("[start] No." + this.no);
                 TimeUnit.SECONDS.sleep(sec);
-
                 System.out.println("[end] No." + this.no);
+
                 this.endGate.countDown();
 
             } catch (InterruptedException e) {
