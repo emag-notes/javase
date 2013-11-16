@@ -3,9 +3,10 @@ package org.emamotor.javase.multithread;
 /**
  * @author Yoshimasa Tanabe
  */
-public class BubbleSortThread extends Thread {
+public class BubbleSortThread extends Thread implements Stoppable {
 
     private int[] array = new int[ThreadSpeedExample.LENGTH];
+    private boolean stop = false;
 
     @Override
     public void run() {
@@ -19,6 +20,12 @@ public class BubbleSortThread extends Thread {
                     array[j + 1] = tmp;
                 }
             }
+
+            if (stop) {
+                System.out.println("[Bubble sort timeout]");
+                return;
+            }
+
         }
         System.out.println("[Bubble sort end]");
     }
@@ -27,4 +34,8 @@ public class BubbleSortThread extends Thread {
         this.array = array;
     }
 
+    @Override
+    public void stopRunning() {
+        this.stop = true;
+    }
 }

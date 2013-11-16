@@ -3,9 +3,10 @@ package org.emamotor.javase.multithread;
 /**
  * @author Yoshimasa Tanabe
  */
-public class ChoiceSortThread extends Thread {
+public class ChoiceSortThread extends Thread implements Stoppable {
 
     private int[] array = new int[ThreadSpeedExample.LENGTH];
+    private boolean stop = false;
 
     @Override
     public void run() {
@@ -23,6 +24,12 @@ public class ChoiceSortThread extends Thread {
                 array[i] = array[min];
                 array[min] = tmp;
             }
+
+            if (stop) {
+                System.out.println("[Choice sort timeout]");
+                return;
+            }
+
         }
         System.out.println("[Choice sort end]");
     }
@@ -30,4 +37,10 @@ public class ChoiceSortThread extends Thread {
     public void setArray(int[] array) {
         this.array = array;
     }
+
+    @Override
+    public void stopRunning() {
+        this.stop = true;
+    }
+
 }
