@@ -18,7 +18,17 @@ public class FileCopyExample extends JFrame implements ActionListener {
     private JLabel toLabel = new JLabel("Copy Dist.");
     private JLabel copyLabel = new JLabel();
 
+    private JRadioButton eucFrom = new JRadioButton("EUC-JP");
+    private JRadioButton sjisFrom = new JRadioButton("SJIS", true);
+    private JRadioButton iso2022jpFrom = new JRadioButton("ISO2022JP");
+    private JRadioButton eucTo = new JRadioButton("EUC-JP");
+    private JRadioButton sjisTo = new JRadioButton("SJIS", true);
+    private JRadioButton iso2022jpTo = new JRadioButton("ISO2022JP");
+
     private JFileChooser chooser = new JFileChooser();
+
+    private String fromCharCode = "SJIS";
+    private String toCharCode = "SJIS";
 
     private File fromFile = null;
     private File toFile = null;
@@ -29,9 +39,33 @@ public class FileCopyExample extends JFrame implements ActionListener {
         setSize(500, 200);
         getContentPane().setLayout(new GridLayout(6, 1));
 
-        getContentPane().add(from);
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+
+        ButtonGroup fromGroup = new ButtonGroup();
+        ButtonGroup toGroup = new ButtonGroup();
+
+        fromGroup.add(eucFrom);
+        fromGroup.add(sjisFrom);
+        fromGroup.add(iso2022jpFrom);
+
+        toGroup.add(eucTo);
+        toGroup.add(sjisTo);
+        toGroup.add(iso2022jpTo);
+
+        panel1.add(from);
+        panel1.add(eucFrom);
+        panel1.add(sjisFrom);
+        panel1.add(iso2022jpFrom);
+
+        panel2.add(to);
+        panel2.add(eucTo);
+        panel2.add(sjisTo);
+        panel2.add(iso2022jpTo);
+
+        getContentPane().add(panel1);
         getContentPane().add(fromLabel);
-        getContentPane().add(to);
+        getContentPane().add(panel2);
         getContentPane().add(toLabel);
         getContentPane().add(copy);
         getContentPane().add(copyLabel);
@@ -39,9 +73,16 @@ public class FileCopyExample extends JFrame implements ActionListener {
         from.addActionListener(this);
         to.addActionListener(this);
         copy.addActionListener(this);
+        eucFrom.addActionListener(this);
+        sjisFrom.addActionListener(this);
+        iso2022jpFrom.addActionListener(this);
+        iso2022jpTo.addActionListener(this);
+        eucTo.addActionListener(this);
+        sjisTo.addActionListener(this);
+        iso2022jpTo.addActionListener(this);
 
         chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileFilter(new PictureFilter());
+        chooser.setFileFilter(new TextFilter());
     }
 
     public static void main(String[] args) {
@@ -56,6 +97,18 @@ public class FileCopyExample extends JFrame implements ActionListener {
             setToFile();
         } else if (e.getSource().equals(copy)) {
             copyFile();
+        } else if (e.getSource().equals(eucFrom)) {
+            fromCharCode = "EUC-JP";
+        } else if (e.getSource().equals(sjisFrom)) {
+            fromCharCode = "SJIS";
+        } else if (e.getSource().equals(iso2022jpFrom)) {
+            fromCharCode = "ISO2022JP";
+        } else if (e.getSource().equals(eucTo)) {
+            toCharCode = "EUC-JP";
+        } else if (e.getSource().equals(sjisTo)) {
+            toCharCode = "SJIS";
+        } else if (e.getSource().equals(iso2022jpTo)) {
+            toCharCode = "ISO2022JP";
         }
     }
 
@@ -76,17 +129,19 @@ public class FileCopyExample extends JFrame implements ActionListener {
     }
 
     private void copyFile() {
-        try (BufferedInputStream input = new BufferedInputStream(new FileInputStream(fromFile));
-             BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(toFile));) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(fromFile), fromCharCode));
+             BufferedWriter writer = new BufferedWriter(
+                     new OutputStreamWriter(new FileOutputStream(toFile), toCharCode));) {
 
-            byte[] buffer = new byte[256];
-            int length;
-            while ((length = input.read(buffer)) != -1) {
-                output.write(buffer, 0, length);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line);
+                writer.newLine();
             }
-            output.flush();
-            output.close();
-            input.close();
+            writer.flush();
+            writer.close();
+            reader.close();
 
             copyLabel.setText("Copy Complete!");
         } catch (FileNotFoundException e) {
