@@ -45,6 +45,9 @@ public class SimpleEditorExample extends JFrame implements ActionListener {
 
         open.addActionListener(this);
         save.addActionListener(this);
+
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileFilter(new JavaFilter());
     }
 
     public static void main(String[] args) {
