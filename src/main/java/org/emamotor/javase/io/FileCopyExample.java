@@ -139,9 +139,6 @@ public class FileCopyExample extends JFrame implements ActionListener {
                 writer.write(line);
                 writer.newLine();
             }
-            writer.flush();
-            writer.close();
-            reader.close();
 
             copyLabel.setText("Copy Complete!");
         } catch (FileNotFoundException e) {

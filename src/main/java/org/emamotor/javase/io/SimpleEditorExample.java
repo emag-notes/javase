@@ -83,7 +83,6 @@ public class SimpleEditorExample extends JFrame implements ActionListener {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(chooser.getSelectedFile()));) {
                 writer.write(textArea.getText());
-                writer.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
