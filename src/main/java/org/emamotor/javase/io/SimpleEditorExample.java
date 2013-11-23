@@ -64,7 +64,7 @@ public class SimpleEditorExample extends JFrame implements ActionListener {
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
-            try (FileReader reader = new FileReader(file)) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 textArea.read(reader, null);
                 setTitle(file.getAbsolutePath());
             } catch (FileNotFoundException e) {
@@ -78,7 +78,7 @@ public class SimpleEditorExample extends JFrame implements ActionListener {
     private void saveFIle() {
         int returnVal = chooser.showSaveDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            try (FileWriter writer = new FileWriter(chooser.getSelectedFile());) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(chooser.getSelectedFile()));) {
                 writer.write(textArea.getText());
                 writer.close();
             } catch (FileNotFoundException e) {
