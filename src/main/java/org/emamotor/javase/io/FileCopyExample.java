@@ -39,6 +39,9 @@ public class FileCopyExample extends JFrame implements ActionListener {
         from.addActionListener(this);
         to.addActionListener(this);
         copy.addActionListener(this);
+
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileFilter(new PictureFilter());
     }
 
     public static void main(String[] args) {
@@ -68,13 +71,13 @@ public class FileCopyExample extends JFrame implements ActionListener {
         int retrunVal = chooser.showOpenDialog(this);
         if (retrunVal == JFileChooser.APPROVE_OPTION) {
             toFile = chooser.getSelectedFile();
-            toLabel.setText(fromFile.getAbsolutePath());
+            toLabel.setText(toFile.getAbsolutePath());
         }
     }
 
     private void copyFile() {
-        try (FileInputStream input = new FileInputStream(fromFile);
-             FileOutputStream output = new FileOutputStream(toFile);) {
+        try (BufferedInputStream input = new BufferedInputStream(new FileInputStream(fromFile));
+             BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(toFile));) {
 
             byte[] buffer = new byte[256];
             int length;
