@@ -11,11 +11,16 @@ public class Main {
     public static void main(String[] args) {
 
         Main buffer = new Main();
-        int[] sizes = {100, 1_000, 10_000, 100_000, 1_000_000};
+//        int[] sizes = {100, 1_000, 10_000, 100_000, 1_000_000};
 
-        for (int size : sizes) {
-            buffer.benchMark(size);
-            System.out.println();
+        try {
+            for (int i = 1; i < Integer.MAX_VALUE; i++) {
+                buffer.benchMark(i);
+                System.out.println();
+            }
+        } catch (OutOfMemoryError oome) {
+            System.out.println("OOME occurred");
+            System.out.println(oome.getMessage());
         }
 
     }
