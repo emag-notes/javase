@@ -1,8 +1,6 @@
 package org.emamotor.javase.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +9,10 @@ import java.util.List;
  * @author Yoshimasa Tanabe
  */
 public class StandardInputExample {
+
+    enum FILE_OR_SOUT {FILE, SOUT}
+
+    private static final String FILE_NAME = "standard-input-example.txt";
 
     public static void main(String[] args) {
         System.out.println("Input number to order.");
@@ -33,7 +35,28 @@ public class StandardInputExample {
 
         Collections.sort(list);
 
-        System.out.println("After sorted:");
-        System.out.println(list);
+        PrintStream out =  null;
+
+        FILE_OR_SOUT fileOrSout = FILE_OR_SOUT.FILE;
+
+        switch (fileOrSout) {
+            case FILE:
+                try {
+                    out = new PrintStream(new FileOutputStream(FILE_NAME));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case SOUT:
+                out = System.out;
+                break;
+            default:
+                throw new RuntimeException("invalid type");
+        }
+
+        out.println("After sorted:");
+        out.println(list);
+
+        System.out.println("Complete!");
     }
 }
