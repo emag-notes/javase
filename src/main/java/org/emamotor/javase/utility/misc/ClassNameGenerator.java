@@ -10,7 +10,15 @@ public class ClassNameGenerator {
     public static void main(String[] args) {
 
         System.out.println(className);
+        new Caller().call();
 
     }
 
 }
+
+class Caller{
+    public void call() {
+        System.out.println(Thread.currentThread().getStackTrace()[2].getClassName());
+    }
+}
+
